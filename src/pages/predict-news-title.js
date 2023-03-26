@@ -1,3 +1,4 @@
+import Link from "next/link";
 import TextArea from "@/components/textarea";
 import Button from "@/components/button";
 import AccuracyBar from "@/components/accuracy-bar";
@@ -37,7 +38,13 @@ export default function PredictNewsTitle() {
       <Layout title="Predict Indonesia News Title">
         <div className="flex flex-col lg:flex-row gap-5 lg:gap-10 w-11/12 lg:w-4/6 mt-6 px-6 py-4 overflow-hidden sm:rounded-lg">
           <div className="basis-1/2">
-            <h1 className="text-2xl text-black font-mono font-extrabold mb-2">API Inference News Title</h1>
+            <Link href="/" className="mt-3 flex flex-row gap-1 text-indigo-600 hover:text-indigo-700 group">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 self-center group-hover:-translate-x-1 transition duration-150 ease-out">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+              </svg>
+              <span className="font-medium text-sm">Back to Home</span>
+            </Link>
+            <h1 className="mt-5 text-2xl text-black font-mono font-extrabold mb-2">API Inference News Title</h1>
             <h2 className="mb-1 text-lg text-black font-bold">Overview Dataset</h2>
             <p className="mb-1 text-black text-sm">
               Dataset Link: <span>
