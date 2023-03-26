@@ -4,7 +4,7 @@ export default function TextArea({
   className = '', 
   placeholder,
   autoComplete,
-  required,
+  required = true,
   value,
   onChange
 }) {
@@ -14,7 +14,7 @@ export default function TextArea({
       rows={rows} 
       value={value}
       className={
-        `mb-3 block p-2.5 w-full text-sm text-black bg-white rounded-lg
+        `block p-2.5 w-full text-sm text-black bg-white rounded-lg
         border border-slate-200 focus:ring-slate-200 focus:border-slate-200 ` + className
       }
       placeholder={placeholder}
