@@ -23,8 +23,9 @@ export default function PredictNewsTitle() {
       return;
     }
 
+    console.log(process.env.API_ENDPOINT_NEWS_TITLE)
     try {
-      const res = await axios.post(process.env.API_ENDPOINT_NEWS_TITLE, {
+      const res = await axios.post("http://127.0.0.1:8000/predict-news", {
         text: text
       }, {
         timeout: 4000,
@@ -38,7 +39,7 @@ export default function PredictNewsTitle() {
       setResults(result);
     } catch (e) {
       setMessage('Connection refused to endpoint');
-      // console.log(e);
+      console.log(e);
     }
     // console.log(results);
   }
@@ -107,19 +108,24 @@ export default function PredictNewsTitle() {
                 )
               }) : null }
 
-              <button 
-                onClick={() => {
-                  setShowJSON(!showJSON);
-                }}
-                className="mt-10 text-slate-400 text-xs font-mono transition duration-150 ease-out"
-                >
-                {"</> JSON Output"}
-              </button>
+              <div className="mt-10 flex flex-row gap-1 text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 self-center text-slate-500">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                </svg>
+                <button 
+                  onClick={() => {
+                    setShowJSON(!showJSON);
+                  }}
+                  className="text-xs font-mono transition duration-150 ease-out"
+                  >
+                  {"JSON Output"}
+                </button>
+              </div>
 
               { 
                 showJSON ? 
                 <div className="mt-2 w-full p-3 bg-slate-100 text-slate-500 text-xs font-mono rounded-lg transition duration-150 ease-out">
-                  {JSON.stringify(results)}
+                  <pre>{JSON.stringify(results, null, 2)}</pre>
                 </div>
                 : null }
             </div>
