@@ -7,16 +7,27 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function PredictNewsTitle() {
-  const [showJSON,setShowJSON] = useState(false);
-  const [text,setText] = useState('');
+  const [showJSON, setShowJSON] = useState(false);
+  const [text, setText] = useState('');
+  const [textError, setTextError] = useState('');
+  const [message, setMessage] = useState('');
   const [results, setResults] = useState([]);
 
   const submitTextTitle = async () => {
+    if (text.length < 10) {
+      if (text.length == 0) {
+        setTextError('This field cannot be left blank')
+        return;
+      }
+      setTextError('The length of character must be greater than 10 char')
+      return;
+    }
+
     try {
-      const res = await axios.post('http://127.0.0.1:8000/predict-news', {
+      const res = await axios.post(process.env.API_ENDPOINT_NEWS_TITLE, {
         text: text
       }, {
-        timeout: 8000,
+        timeout: 4000,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -24,10 +35,10 @@ export default function PredictNewsTitle() {
       )
       const data_response = await res;
       const {result} = data_response.data.data;
-      // console.log(result);
       setResults(result);
     } catch (e) {
-      console.log(e);
+      setMessage('Connection refused to endpoint');
+      // console.log(e);
     }
     // console.log(results);
   }
@@ -38,7 +49,7 @@ export default function PredictNewsTitle() {
       <Layout title="Predict Indonesia News Title">
         <div className="flex flex-col lg:flex-row gap-5 lg:gap-10 w-11/12 lg:w-4/6 mt-6 px-6 py-4 overflow-hidden sm:rounded-lg">
           <div className="basis-1/2">
-            <Link href="/" className="mt-3 flex flex-row gap-1 text-indigo-600 hover:text-indigo-700 group">
+            <Link href="/" className="mt-3 flex flex-row gap-1 text-blue-700 hover:text-blue-500 group">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 self-center group-hover:-translate-x-1 transition duration-150 ease-out">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
               </svg>
@@ -51,7 +62,7 @@ export default function PredictNewsTitle() {
                 <a 
                   href="https://www.kaggle.com/datasets/ibamibrahim/indonesian-news-title" 
                   target={"_blank"}
-                  className="text-indigo-500 hover:text-indigo-600">
+                  className="text-indigo-500 hover:text-blue-700">
                     kaggle.com/datasets/ibamibrahim/indonesian-news-title
                 </a></span>
             </p>
@@ -63,18 +74,27 @@ export default function PredictNewsTitle() {
               <h4 className="text-sm font-normal text-slate-400 mb-1">Text Classification</h4>
               <div className="mt-3 flex flex-col items-start">
 
-                <TextArea 
-                  name="text" 
-                  rows="4" 
-                  placeholder="Your title text"
-                  onChange={(e) => setText(e.target.value)}
-                />
+                <div className="mb-3 w-full">
+                  <TextArea 
+                    name="text" 
+                    rows="4" 
+                    placeholder="Your title text"
+                    required={true}
+                    onChange={(e) => setText(e.target.value)}
+                  />
+
+                  { textError == '' ? '' : (
+                    <p className="mt-1 text-red-600 text-xs">{textError}</p>
+                  )
+                  }
+
+                  { message == '' ? '' : (
+                    <p className="mt-1 text-red-600 text-xs">{message}</p>
+                  )
+                  }
+                </div>
                 
-                <Button 
-                  type="submit"
-                  onClick={submitTextTitle}
-                  >Compute
-                </Button>
+                <Button type="submit" onClick={submitTextTitle}>Compute</Button>
 
               </div>
               <p className="mb-4 text-slate-400 text-xs">Computation time on Intel Core i3 7th Gen Scalable cpu: cached and Nvidia GTX 1050Ti</p>
@@ -86,7 +106,6 @@ export default function PredictNewsTitle() {
                   </div>
                 )
               }) : null }
-
 
               <button 
                 onClick={() => {
@@ -100,7 +119,6 @@ export default function PredictNewsTitle() {
               { 
                 showJSON ? 
                 <div className="mt-2 w-full p-3 bg-slate-100 text-slate-500 text-xs font-mono rounded-lg transition duration-150 ease-out">
-                  {/* { results.length > 0 ? results : null } */}
                   {JSON.stringify(results)}
                 </div>
                 : null }
