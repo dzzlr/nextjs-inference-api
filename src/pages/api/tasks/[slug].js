@@ -1,4 +1,3 @@
-import { NextRequest, NextResponse } from 'next'
 import { tasks } from "../../../../data/tasks"
 
 export default function handler(req, res) {
