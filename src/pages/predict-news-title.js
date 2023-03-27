@@ -84,15 +84,9 @@ export default function PredictNewsTitle() {
                     onChange={(e) => setText(e.target.value)}
                   />
 
-                  { textError == '' ? '' : (
-                    <p className="mt-1 text-red-600 text-xs">{textError}</p>
-                  )
-                  }
-
-                  { message == '' ? '' : (
-                    <p className="mt-1 text-red-600 text-xs">{message}</p>
-                  )
-                  }
+                  { textError == '' ? '' : <p className="mt-1 text-red-600 text-xs">{textError}</p> }
+                  { message == '' ? '' : <p className="mt-1 text-red-600 text-xs">{message}</p>}
+                  
                 </div>
                 
                 <Button type="submit" onClick={submitTextTitle}>Compute</Button>
@@ -102,32 +96,27 @@ export default function PredictNewsTitle() {
 
               { results.length > 0 ? results.map((result, i) => {
                 return (
-                  <div key={i}>
-                    <AccuracyBar label={result.label} value={(result.score * 100).toFixed(2)}/>
-                  </div>
+                  <AccuracyBar key={i} label={result.label} value={(result.score * 100).toFixed(2)}/>
                 )
               }) : null }
 
-              <div className="mt-10 flex flex-row gap-1 text-slate-400">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 self-center text-slate-500">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-                </svg>
-                <button 
-                  onClick={() => {
-                    setShowJSON(!showJSON);
-                  }}
-                  className="text-xs font-mono transition duration-150 ease-out"
-                  >
-                  {"JSON Output"}
-                </button>
+              <div className="mt-10 relative overflow-hidden">
+                <input type={"checkbox"} className="peer w-24 absolute top-0 inset-x-0 opacity-0 z-10 cursor-pointer"/>
+                <div className="mb-2 w-24 flex flex-row items-center gap-1 text-slate-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 self-center text-slate-500">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                  </svg>
+                  <h1 className="text-xs">JSON Output</h1>
+                </div>
+
+                <div className="absolute top-3 right-3 text-white transition-transform duration-500 ease-in-out rotate-0 peer-checked:rotate-180"></div>
+                <div className="w-full bg-slate-100 text-slate-500 text-xs rounded-lg overflow-hidden transition-all duration-500 ease-in-out max-h-0 peer-checked:max-h-[50rem]">
+                  <div className="p-3">
+                    <pre>{JSON.stringify(results, null, 2)}</pre>
+                  </div>
+                </div>
               </div>
 
-              { 
-                showJSON ? 
-                <div className="mt-2 w-full p-3 bg-slate-100 text-slate-500 text-xs font-mono rounded-lg transition duration-150 ease-out">
-                  <pre>{JSON.stringify(results, null, 2)}</pre>
-                </div>
-                : null }
             </div>
           </div>
         </div>
