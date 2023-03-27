@@ -7,7 +7,6 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function PredictNewsTitle() {
-  const [showJSON, setShowJSON] = useState(false);
   const [text, setText] = useState('');
   const [textError, setTextError] = useState('');
   const [message, setMessage] = useState('');
@@ -86,7 +85,7 @@ export default function PredictNewsTitle() {
 
                   { textError == '' ? '' : <p className="mt-1 text-red-600 text-xs">{textError}</p> }
                   { message == '' ? '' : <p className="mt-1 text-red-600 text-xs">{message}</p>}
-                  
+
                 </div>
                 
                 <Button type="submit" onClick={submitTextTitle}>Compute</Button>
