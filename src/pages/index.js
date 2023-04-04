@@ -38,11 +38,10 @@ export default function Home(props) {
 }
 
 export async function getStaticProps(context) {
+  // Fetch data from internal API
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/tasks`);
   const tasks = await res.json();
-  return {
-    props: {
-      tasks,
-    },
-  }
+
+  // Pass data to the page via props
+  return { props: { tasks } }
 }
