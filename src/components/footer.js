@@ -7,7 +7,7 @@ export default function Footer(props) {
       <div className="w-full md:w-11/12 lg:w-4/6 px-6 py-7 mx-0 md:mx-auto sm:rounded-lg items-center">
         <div className="flex flex-col md:flex-row justify-between gap-2 lg:gap-10">
           <div className="my-auto">
-            <Logo fontColor={'text-white'}/>
+            <Logo fontColor={'text-slate-800'}/>
           </div>
           <div className="flex flex-col mt-2 gap-1">
             <div className="text-slate-500 font-medium">Explore</div>

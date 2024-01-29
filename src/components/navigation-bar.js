@@ -12,7 +12,7 @@ export default function NavigationBar({ className = "", children }) {
         <div className="flex flex-col lg:flex-row w-full md:w-11/12 lg:w-4/6 px-4 py-2 md:py-3 justify-between bg-white">
           <div className="flex justify-between">
             <Link href="">
-              <Logo fontColor={"text-black"} />
+              <Logo/>
             </Link>
             <button className="block lg:hidden" onClick={() => setIsOpen(!isOpen)}>
               <svg
